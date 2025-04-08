@@ -19,12 +19,8 @@ import { Outlet } from 'react-router-dom';
 
 const drawerWidth = 240;
 
-interface Props {
-  window?: () => Window;
-}
+export default function ResponsiveDrawer() {
 
-export default function ResponsiveDrawer(props: Props) {
-    const { window } = props;
     const [mobileOpen, setMobileOpen] = React.useState(false);
     const [isClosing, setIsClosing] = React.useState(false);
     
@@ -74,11 +70,12 @@ export default function ResponsiveDrawer(props: Props) {
         </List>
         </div>
     );
-    const container = window !== undefined ? () => window().document.body : undefined;
     
     return (
-        <Box sx={{ display: 'flex' }}>
+        <Box sx={{ display: 'flex', bgcolor: (theme) => theme.palette.grey[100], minHeight: "100vh" }}>
         <CssBaseline />
+
+        {/* header */}
         <AppBar
             position="fixed"
             sx={{
@@ -101,14 +98,15 @@ export default function ResponsiveDrawer(props: Props) {
             </Typography>
             </Toolbar>
         </AppBar>
+
+        {/* sidebar */}
         <Box
             component="nav"
             sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
             aria-label="mailbox folders"
         >
-            {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
+            {/* SP */}
             <Drawer
-            container={container}
             variant="temporary"
             open={mobileOpen}
             onTransitionEnd={handleDrawerTransitionEnd}
@@ -125,17 +123,21 @@ export default function ResponsiveDrawer(props: Props) {
             >
             {drawer}
             </Drawer>
+
+            {/* PC */}
             <Drawer
-            variant="permanent"
-            sx={{
-                display: { xs: 'none', sm: 'block' },
-                '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
-            }}
-            open
-            >
-            {drawer}
+                variant="permanent"
+                sx={{
+                    display: { xs: 'none', sm: 'block' },
+                    '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+                }}
+                open
+                >
+                {drawer}
             </Drawer>
         </Box>
+
+        {/* maincontents */}
         <Box
             component="main"
             sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
