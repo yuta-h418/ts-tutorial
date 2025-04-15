@@ -22,7 +22,7 @@ export default function AppLayout() {
     const [mobileOpen, setMobileOpen] = React.useState(false);
     
     const handleDrawerClose = () => {
-        setMobileOpen(false);
+        setMobileOpen(false);      
     };
     
     const handleDrawerToggle = () => {
